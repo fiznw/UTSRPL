@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Penjualan Fried Chicken</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="sidebar">
+        <img src="Background ayam.jpeg" alt="" height="100cm">
+        <h2 class="judul">🍗Fried Chicken Sales</h2>
+        <ul>
+            <li onclick="showSection('salesReportSection')">1. Hasil Penjualan</li>
+            <li onclick="showSection('historyOutSection')">2. Histori Barang Keluar</li>
+            <li onclick="showSection('orderSection')">3. Pesanan Customer</li>
+            <li onclick="showSection('stockSection')">4. Input Stock Barang</li>
+            <li onclick="showSection('viewStockSection')">5. Melihat Stok Barang</li>
+            <li onclick="showSection('historyInSection')">6. Histori Barang Masuk</li>
+        </ul>
+    </div>
+
+    <div class="content">
+        <div id="dashboardSection">
+            <h2>Selamat Datang di Penjualan Fried Chicken!</h2>
+            <p>Pilih menu di sebelah kiri untuk melihat atau mengelola data penjualan dan stok barang.</p>
+        </div>
+
+        <div id="salesReportSection" class="section" style="display: none;">
+            <h3>📈 Hasil Penjualan</h3>
+            <table id="salesTable">
+                <tr><th>Nama Barang</th><th>Jumlah</th><th>Harga</th></tr>
+                <!-- Data penjualan ditampilkan di sini -->
+            </table>
+        </div>
+
+        <div id="historyOutSection" class="section" style="display: none;">
+            <h3>📤 Histori Barang Keluar</h3>
+            <table id="historyOutTable">
+                <tr><th>Tanggal</th><th>Nama Barang</th><th>Jumlah Barang</th></tr>
+                <!-- Data histori barang keluar ditampilkan di sini -->
+            </table>
+        </div>
+
+        <div id="orderSection" class="section" style="display: none;">
+            <h3>📝 Pesanan Customer</h3>
+            <form id="orderForm">
+                <h4>Tampilan Tabel Menu</h4>
+                <table>
+                    <tr><th>Nama Barang</th><th>Harga</th></tr>
+                    <tr><td>Dada</td><td>Rp 13,000</td></tr>
+                    <tr><td>Paha Atas</td><td>Rp 13,000</td></tr>
+                    <tr><td>Paha Bawah</td><td>Rp 11,000</td></tr>
+                    <tr><td>Sayap</td><td>Rp 5,000</td></tr>
+                </table>
+                <label for="orderFood">Pilihan Makanan:</label>
+                <select id="orderFood" required>
+                    <option value="dada">Dada</option>
+                    <option value="pahaAtas">Paha Atas</option>
+                    <option value="pahaBawah">Paha Bawah</option>
+                    <option value="sayap">Sayap</option>
+                </select>
+                <label for="orderQuantity">Jumlah:</label>
+                <input type="number" id="orderQuantity" required>
+                <label>Tambahan Menu: <input type="checkbox" id="addMenu" onchange="toggleExtraMenu()"></label>
+                <div id="extraMenu" style="display: none;">
+                    <label for="extraFood">Pilihan Makanan Tambahan:</label>
+                    <select id="extraFood">
+                        <option value="dada">Dada</option>
+                        <option value="pahaAtas">Paha Atas</option>
+                        <option value="pahaBawah">Paha Bawah</option>
+                        <option value="sayap">Sayap</option>
+                    </select>
+                    <label for="extraQuantity">Jumlah:</label>
+                    <input type="number" id="extraQuantity" value="1" min="1">
+                </div>
+                <label for="paymentMethod">Pembayaran:</label>
+                <select id="paymentMethod" required>
+                    <option value="cash">Cash</option>
+                    <option value="eWallet">E-wallet</option>
+                </select>
+                <button type="button" onclick="submitOrder()">Bayar</button>
+                <h4>Deskripsi Pesanan:</h4>
+                <div id="orderDescription"></div>
+            </form>
+            <h4>Pesanan Customer:</h4>
+            <table id="orderList">
+                <tr><th>Tanggal</th><th>Nama Pesanan</th><th>Jumlah</th><th>Harga</th></tr>
+                <!-- Pesanan customer ditampilkan di sini -->
+            </table>
+        </div>
+
+        <div id="stockSection" class="section" style="display: none;">
+            <h3>📦 Input Stock Barang</h3>
+            <form id="stockForm">
+                <label for="stockItem">Nama Barang:</label>
+                <select id="stockItem">
+                    <option value="dada">Dada</option>
+                    <option value="pahaAtas">Paha Atas</option>
+                    <option value="pahaBawah">Paha Bawah</option>
+                    <option value="sayap">Sayap</option>
+                </select>
+                <label for="stockDate">Tanggal:</label>
+                <input type="date" id="stockDate" required>
+                <label for="stockQuantity">Jumlah Barang:</label>
+                <input type="number" id="stockQuantity" required>
+                <button type="button" onclick="addStock()">Tambah Stock</button>
+            </form>
+        </div>
+
+        <div id="viewStockSection" class="section" style="display: none;">
+            <h3>🔍 Melihat Stok Barang</h3>
+            <table id="stockTable">
+                <tr><th>Nama Barang</th><th>Jumlah</th></tr>
+                <!-- Stok barang ditampilkan di sini -->
+            </table>
+        </div>
+
+        <div id="historyInSection" class="section" style="display: none;">
+            <h3>📥 Histori Barang Masuk</h3>
+            <table id="historyInTable">
+                <tr><th>Tanggal</th><th>Nama Barang</th><th>Jumlah Barang</th></tr>
+                <!-- Data histori barang masuk ditampilkan di sini -->
+            </table>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
